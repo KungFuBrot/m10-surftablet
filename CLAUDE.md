@@ -1,6 +1,15 @@
 # Übergabe für die nächste Session
 
-Dieses Projekt ist geplant, aber noch nicht begonnen. Am Tablet wurde bisher nichts verändert und nichts ausgelesen. Ziel und Entscheidungen stehen im [README](README.md).
+Stand 15.11.2026: Bestandsaufnahme, Recherche und Sicherung sind erledigt, die Ergebnisse stehen im [README](README.md). Am Tablet wurde noch nichts verändert. Die Fragen unter „Was noch niemand weiß“ sind bis auf den Schalter „OEM-Entsperrung“ beantwortet.
+
+Nächster Schritt: Der Besitzer entscheidet, ob LineageOS 15.1 trotz SELinux „permissive“ installiert wird. Erst danach Bootloader entsperren und flashen.
+
+Sicherung und Werkzeug liegen außerhalb des Repositorys:
+
+- `C:Educationm10-sicherung`: Komplettabbild, Einzelpartitionen, `SHA256SUMS.txt`
+- `C:Educationm10-werkzeug`: mtkclient mit den Anpassungen aus `werkzeug/mtkclient-m10.patch`, eigene Python-Umgebung `venv`
+
+mtkclient immer mit `--serialport` aufrufen, ab dem zweiten Befehl einer Sitzung mit `M10_RESUME=2`. Einzelheiten und Stolpersteine stehen im README unter „Sicherung“.
 
 ## Was feststeht
 

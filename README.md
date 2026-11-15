@@ -2,7 +2,7 @@
 
 Ein altes BQ Aquaris M10 wird zu einem schlanken Surftablet für das Heimnetz. Der Schwerpunkt liegt auf Tempo und Sicherheit, mit möglichst wenigen Apps.
 
-**Stand (15.11.2026):** Bestandsaufnahme und Recherche sind abgeschlossen. Es ist ein M10 FHD mit Android 6.0. Am Tablet wurde noch nichts verändert. Als Nächstes folgt die Sicherung. Die nächsten Schritte und offenen Fragen stehen in der [Übergabe](CLAUDE.md).
+**Stand (15.11.2026):** Bestandsaufnahme und Recherche sind abgeschlossen. Es ist ein M10 FHD mit Android 6.0. Der komplette Speicher ist gesichert und geprüft. Am Tablet wurde noch nichts verändert. Als Nächstes entscheidet der Besitzer über LineageOS 15.1. Die nächsten Schritte und offenen Fragen stehen in der [Übergabe](CLAUDE.md).
 
 ## Zielgerät
 
@@ -100,8 +100,8 @@ Der Preis: ein System von 2021 mit ausgeschaltetem SELinux und entsperrtem Bootl
 
 Reihenfolge:
 
-1. Komplettsicherung nach dem Sicherungsplan.
-2. Persönliche Dateien vom Tablet retten (Ordner `Download` etwa 650 MB, dazu Fotos). Das Entsperren löscht alles.
+1. Komplettsicherung: erledigt.
+2. Persönliche Dateien: Laut Besitzer liegt nichts auf dem Tablet, das aufgehoben werden muss. Das Komplettabbild enthält den Datenbereich trotzdem. Das Entsperren löscht alles.
 3. Bootloader entsperren, TWRP für `freezerfhd` starten, LineageOS 15.1 installieren. Keine Google-Apps.
 4. Firefox mit uBlock Origin installieren. Prüfen, ob Verschlüsselung und Bildschirmsperre funktionieren.
 5. Wenn LineageOS im Alltag nicht taugt: Originalfirmware 2.6.2 oder die eigene Sicherung zurückspielen.
@@ -110,34 +110,56 @@ Für ein M10 HD wäre die Empfehlung anders ausgefallen: Dort gibt es Originalfi
 
 Es gilt: nur Firefox mit uBlock Origin, keine Google-Konten, keine gespeicherten Passwörter für wichtige Dienste.
 
-## Sicherungsplan
+## Sicherung
 
-Vor jedem Schreibzugriff wird der komplette Speicher (16 GB) auf den PC ausgelesen. Die Originalfirmware gibt es zwar wieder im Netz, aber einige Bereiche gibt es nur auf diesem einen Gerät: `nvram`, `proinfo` und `protect1`/`protect2` enthalten WLAN- und Bluetooth-Adresse, Seriennummer und Kalibrierdaten. Gehen sie verloren, hilft keine Firmware aus dem Netz.
+**Erledigt am 15.11.2026.** Der komplette Speicher liegt auf dem PC, außerhalb des Repositorys. Auslesen verändert das Tablet nicht.
 
-Ohne Root lässt sich über `adb` kein Speicherabbild ziehen. Es bleibt der USB-Notfallmodus des MediaTek-Chips, für den es zwei Werkzeuge gibt:
+| Was | Umfang |
+|---|---|
+| Komplettabbild des Benutzerbereichs | 15 758 000 128 Bytes, genau die Größe des eMMC-Speichers |
+| 21 Partitionen einzeln | alle außer `system`, `cache` und `userdata`, dazu die Partitionstabelle |
+| Boot-Bereiche `boot1` und `boot2` | je 4 MB, `boot1` enthält den Preloader |
+| Prüfsummen | SHA-256 für alle 26 Dateien |
 
-| | mtkclient (empfohlen) | SP Flash Tool |
-|---|---|---|
-| Herkunft | Quelloffen, [GitHub](https://github.com/bkerler/mtkclient) | Geschlossenes MediaTek-Programm, nur über inoffizielle Download-Seiten |
-| Braucht | Python 3 (python.org), Treiber UsbDk, MediaTek-USB-Treiber | MediaTek-VCOM-Treiber, dafür unter Windows 11 die Treibersignaturprüfung abschalten; dazu die Scatter-Datei aus der Originalfirmware (etwa 1 GB Download) |
-| Komplettabbild | Ein Befehl (`mtk rf flash.bin`), dazu `mtk rl` für einzelne Partitionen | „Readback“ mit von Hand eingetragenen Adressbereichen |
-| MT8163 | Im Quellcode eingetragen (Konfiguration und Payload vorhanden) | Vom bq-mtk-Projekt als Standardweg beschrieben |
+Geprüft: Die 21 Einzelpartitionen stimmen Byte für Byte mit den entsprechenden Ausschnitten des Komplettabbilds überein. Beide wurden unabhängig voneinander gelesen. `nvram`, `proinfo`, `protect1` und `protect2` enthalten Daten; sie gibt es nur auf diesem Gerät (WLAN- und Bluetooth-Adresse, Seriennummer, Kalibrierung).
 
-Empfohlen ist mtkclient: Alle Bestandteile kommen aus nachvollziehbaren Quellen, die Windows-Sicherheitsfunktionen bleiben eingeschaltet, und das Auslesen ist ein einziger Befehl. Das SP Flash Tool bleibt die Rückfallebene, falls mtkclient das Tablet nicht anspricht.
+Noch offen: eine Kopie der Sicherung auf einen zweiten Datenträger. Zurückgespielt wurde die Sicherung noch nie, das Schreiben ist also ungetestet.
 
-Ablauf, sobald der Besitzer den Installationen zugestimmt hat:
+### Wie es funktioniert hat
 
-1. Python 3 von python.org, UsbDk und den MediaTek-USB-Treiber installieren, mtkclient in einen Ordner außerhalb des Repositorys laden.
-2. Tablet ausschalten, `mtk rf` starten, Tablet mit gedrückter Lautstärketaste per USB anschließen. Das Auslesen von 16 GB dauert etwa eine halbe bis ganze Stunde.
-3. Zusätzlich die Partitionen einzeln auslesen (`mtk rl`), damit `nvram`, `proinfo`, `protect1`, `protect2`, `preloader` und `lk` als eigene Dateien vorliegen.
-4. Prüfsummen notieren und die Sicherung auf einen zweiten Datenträger kopieren. Sie enthält Seriennummer und eventuell persönliche Daten und gehört nicht ins Repository.
+Ohne Root lässt sich über `adb` kein Speicherabbild ziehen. Gelesen wurde über den Preloader-Modus des MediaTek-Chips mit [mtkclient](https://github.com/bkerler/mtkclient) (Stand 26.10.2026, Commit `118a000`).
 
-Auslesen verändert das Tablet nicht. Geschrieben wird erst nach ausdrücklicher Zustimmung.
+Auf dem Windows-PC installiert:
+
+- Python 3.12 von python.org (über `winget`)
+- UsbDk 1.0.22 (signiert von Red Hat), danach Windows neu starten
+- MediaTek-Treiber „PreLoader USB VCOM“ 3.0.1504.0 aus dem Microsoft Update Catalog (von Microsoft signiert, die Treibersignaturprüfung bleibt eingeschaltet). Ohne ihn hat Windows keinen Treiber für den Preloader, und die Verbindung scheitert.
+
+Ablauf:
+
+1. Tablet ausschalten und ohne Tastendruck per USB anstecken. Es meldet sich als „MediaTek PreLoader USB VCOM“ an einem COM-Anschluss.
+2. mtkclient im seriellen Modus benutzen (`--serialport`). Der direkte USB-Zugriff von mtkclient scheitert auf diesem PC am Handshake.
+3. `python mtk.py printgpt --serialport` lädt das Auslese-Programm in den Arbeitsspeicher des Tablets und zeigt die Partitionstabelle.
+4. `python mtk.py rl <Ordner> --skip userdata,system,cache --serialport` liest die kleinen Partitionen (70 Sekunden).
+5. `python mtk.py rf boot1.bin --parttype boot1 --serialport`, ebenso `boot2`.
+6. `python mtk.py rf flash-komplett.bin --serialport` liest alles (3,1 MB/s, 80 Minuten). Der PC darf dabei nicht in den Ruhezustand gehen.
+7. `python mtk.py reset --serialport`, dann das USB-Kabel abziehen. Erst dadurch schaltet sich das Tablet aus.
+
+### Stolpersteine
+
+mtkclient lief im seriellen Modus erst mit den Anpassungen in [`werkzeug/mtkclient-m10.patch`](werkzeug/mtkclient-m10.patch):
+
+- **Der Treiber lehnt Einstellungen ab, sobald das Auslese-Programm läuft.** pyserial bricht dann mit „Cannot configure port“ ab. Der Patch lässt pyserial weiterarbeiten. Dieser Teil ist immer nötig.
+- **Das Tablet bleibt im halb geladenen Auslese-Programm hängen**, wenn mtkclient mittendrin abstürzt. Der Bildschirm bleibt schwarz, und die Einschalttaste löst auch nach 30 Sekunden keinen Neustart aus. Der Patch kann die Sitzung fortsetzen: `M10_RESUME=1` liefert die fehlende zweite Stufe nach, `M10_RESUME=2` hängt weitere Befehle an die laufende Sitzung an. Diese Teile enthalten feste Werte für genau dieses Gerät.
+- **Jeder Befehl nach dem ersten braucht `M10_RESUME=2`**, weil mtkclient im seriellen Modus sonst wieder mit der Begrüßung des Preloaders beginnt, die das Auslese-Programm nicht versteht.
+- Wartet der Preloader schon synchronisiert, hängt die unveränderte Begrüßung in einer Endlosschleife. Auch das fängt der Patch ab.
+
+Das SP Flash Tool wurde nicht gebraucht. Es bleibt die Rückfallebene für das Zurückspielen, zusammen mit der Originalfirmware 2.6.2 aus dem bq-mtk-Projekt.
 
 ## Etappen
 
 1. **Bestandsaufnahme:** erledigt, siehe oben.
-2. **Sichern:** Den kompletten Speicher nach dem Sicherungsplan auslesen.
+2. **Sichern:** erledigt, siehe oben.
 3. **Entscheiden:** LineageOS 15.1 mit seinen Schwächen annehmen oder das Vorhaben überdenken, siehe Empfehlung.
 4. **Installieren und abspecken:** Nur Firefox und Werbeblocker, alles andere entfernen oder deaktivieren.
 5. **Absichern:** Bildschirmsperre, Verschlüsselung (falls sie funktioniert), keine Google-Dienste, automatische Browser-Updates.
