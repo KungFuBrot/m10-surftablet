@@ -2,27 +2,38 @@
 
 Ein altes BQ Aquaris M10 wird zu einem schlanken Surftablet für das Heimnetz. Der Schwerpunkt liegt auf Tempo und Sicherheit, mit möglichst wenigen Apps.
 
-**Stand (15.11.2026):** Recherche abgeschlossen, Bestandsaufnahme am Gerät steht noch aus. Am Tablet wurde noch nichts verändert. Die nächsten Schritte und offenen Fragen stehen in der [Übergabe](CLAUDE.md).
+**Stand (15.11.2026):** Bestandsaufnahme und Recherche sind abgeschlossen. Es ist ein M10 FHD mit Android 6.0. Am Tablet wurde noch nichts verändert. Als Nächstes folgt die Sicherung. Die nächsten Schritte und offenen Fragen stehen in der [Übergabe](CLAUDE.md).
 
 ## Zielgerät
 
 | | |
 |---|---|
-| Gerät | BQ Aquaris M10 (10 Zoll), Variante HD oder FHD, noch zu bestimmen |
+| Gerät | BQ Aquaris M10 FHD (10 Zoll, 1920 × 1200), unter Android `freezerfhd` |
 | Chip | MediaTek MT8163, 64-Bit ARM, 2 GB RAM, 16 GB Speicher |
 
 ### Bestandsaufnahme am Gerät
 
-Noch offen. Das Tablet war bisher nicht per USB angeschlossen.
+Am 15.11.2026 per `adb` ausgelesen, nur lesend.
 
 | Frage | Ergebnis |
 |---|---|
-| Startet das Tablet, Akkuzustand | offen |
-| Variante | offen |
-| System, Android-Version, Sicherheitspatch | offen |
-| Bildschirmauflösung, RAM, freier Speicher | offen |
-| Google-Konto eingerichtet | offen |
-| Schalter „OEM-Entsperrung“ vorhanden | offen |
+| Startet das Tablet | Ja, Android läuft, `adb` erkennt das Gerät |
+| Variante | **M10 FHD** (`ro.product.model` „Aquaris M10 FHD“, Chip MT8163) |
+| System | Originalfirmware 2.6.2 vom 26.01.2018, Android 6.0, Kernel 3.18.22 |
+| Sicherheitspatch | 05.12.2017 |
+| Bildschirm | 1920 × 1200, 240 dpi |
+| RAM | 2 GB |
+| Speicher | Datenbereich 12,2 GB, davon 1,6 GB frei; unverschlüsselt |
+| Akku | Zustand laut System „gut“, 46 % bei 3,98 V; die Laufzeit ist noch nicht gemessen |
+| Konten | Keine eingerichtet, also auch kein Google-Konto und keine Sperre nach dem Zurücksetzen |
+| Bildschirmsperre | Keine |
+| SELinux | Enforcing (eingeschaltet) |
+| Bootloader | Gesperrt (Startprüfung „green“), Entsperren derzeit nicht freigegeben |
+| Schalter „OEM-Entsperrung“ | Noch am Gerät nachzusehen |
+| Browser | Chrome und WebView 106 (Oktober 2022), Firefox Klar; alle ohne weitere Updates |
+| Apps | 128 Pakete, davon 13 nachinstalliert; Play Store und Google-Dienste vorhanden |
+
+Das Tablet läuft mit der letzten Firmware, die BQ für das FHD herausgegeben hat. Auf Android 6.0 bekommt kein Browser mehr Updates.
 
 ### Die Varianten und ihre Namen
 
@@ -83,13 +94,21 @@ Auf Android 6.0.1, der letzten Originalfirmware des FHD, läuft kein aktueller B
 
 ## Empfehlung
 
-Der weitere Weg hängt von der Variante ab.
+Das Tablet ist ein M10 FHD. Damit ist **LineageOS 15.1 vom 06.09.2021 der einzige Weg zu einem Browser mit Updates**, denn die Originalfirmware endet bei Android 6.0.
 
-**Wenn es ein M10 HD ist:** Zuerst die Originalfirmware Android 8.1 (3.0.4) behalten oder einspielen, statt LineageOS zu installieren. Firefox läuft darauf genauso, SELinux bleibt eingeschaltet, die Verschlüsselung ist vom Hersteller getestet, und der Bootloader kann gesperrt bleiben. Die Google-Apps und der übrige Ballast lassen sich per `adb` deaktivieren, ohne das System zu verändern. LineageOS brächte hier keine neuere Android-Version, sondern nur ein schlankeres System, und kostet dafür SELinux und den gesperrten Bootloader.
+Der Preis: ein System von 2021 mit ausgeschaltetem SELinux und entsperrtem Bootloader. Das ist in diesen Punkten schwächer als die jetzige Firmware, die dafür einen Browser von 2022 und Sicherheitspatches von 2017 hat. Weil beim Surfen der Browser das größte Einfallstor ist, überwiegt der aktuelle Firefox. Für ein Tablet, das nur im Heimnetz surft und keine Konten, Passwörter oder Bankdaten enthält, ist das vertretbar, aber schlechter als erhofft. Diese Abwägung trifft der Besitzer, bevor irgendetwas geflasht wird.
 
-**Wenn es ein M10 FHD ist:** LineageOS 15.1 ist der einzige Weg zu einem aktuellen Browser, weil die Originalfirmware bei Android 6.0.1 endet. Der Preis ist ein System von 2021 mit ausgeschaltetem SELinux und entsperrtem Bootloader. Für ein Tablet, das nur im Heimnetz surft und keine Konten, Passwörter oder Bankdaten enthält, ist das vertretbar, aber schlechter als erhofft. Diese Abwägung trifft der Besitzer, bevor irgendetwas geflasht wird.
+Reihenfolge:
 
-In beiden Fällen gilt: nur Firefox mit uBlock Origin, keine Google-Konten, keine gespeicherten Passwörter für wichtige Dienste.
+1. Komplettsicherung nach dem Sicherungsplan.
+2. Persönliche Dateien vom Tablet retten (Ordner `Download` etwa 650 MB, dazu Fotos). Das Entsperren löscht alles.
+3. Bootloader entsperren, TWRP für `freezerfhd` starten, LineageOS 15.1 installieren. Keine Google-Apps.
+4. Firefox mit uBlock Origin installieren. Prüfen, ob Verschlüsselung und Bildschirmsperre funktionieren.
+5. Wenn LineageOS im Alltag nicht taugt: Originalfirmware 2.6.2 oder die eigene Sicherung zurückspielen.
+
+Für ein M10 HD wäre die Empfehlung anders ausgefallen: Dort gibt es Originalfirmware mit Android 8.1, auf der Firefox ohne LineageOS läuft.
+
+Es gilt: nur Firefox mit uBlock Origin, keine Google-Konten, keine gespeicherten Passwörter für wichtige Dienste.
 
 ## Sicherungsplan
 
@@ -117,15 +136,16 @@ Auslesen verändert das Tablet nicht. Geschrieben wird erst nach ausdrücklicher
 
 ## Etappen
 
-1. **Bestandsaufnahme:** Variante und System per `adb` bestimmen. Verändert nichts.
+1. **Bestandsaufnahme:** erledigt, siehe oben.
 2. **Sichern:** Den kompletten Speicher nach dem Sicherungsplan auslesen.
-3. **Entscheiden:** Je nach Variante Originalfirmware 8.1 oder LineageOS 15.1, siehe Empfehlung.
+3. **Entscheiden:** LineageOS 15.1 mit seinen Schwächen annehmen oder das Vorhaben überdenken, siehe Empfehlung.
 4. **Installieren und abspecken:** Nur Firefox und Werbeblocker, alles andere entfernen oder deaktivieren.
 5. **Absichern:** Bildschirmsperre, Verschlüsselung (falls sie funktioniert), keine Google-Dienste, automatische Browser-Updates.
 
 ## Offene Punkte
 
-- Die Bestandsaufnahme am Gerät fehlt noch vollständig.
+- Ob die Entwickleroptionen einen Schalter „OEM-Entsperrung“ haben, ist noch nachzusehen. Ohne ihn bleibt das Flashen über den USB-Notfallmodus.
+- Die tatsächliche Akkulaufzeit ist nicht gemessen.
 - Welchen Stand der Sicherheitspatches die LineageOS-Builds haben und ob die Verschlüsselung darin funktioniert, zeigt sich erst am installierten System.
 - Die Forenbeiträge bei XDA und HTCMania ließen sich nicht automatisch abrufen; die Angaben daraus stammen aus Suchergebnissen.
 - Der Kernel des Tablets (3.18) bekommt keine Sicherheitsupdates mehr. Das Tablet sollte deshalb nur im Heimnetz und nicht für Bankgeschäfte benutzt werden.
