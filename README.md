@@ -29,7 +29,7 @@ Am 15.11.2026 per `adb` ausgelesen, nur lesend.
 | Bildschirmsperre | Keine |
 | SELinux | Enforcing (eingeschaltet) |
 | Bootloader | Gesperrt (Startprüfung „green“), Entsperren derzeit nicht freigegeben |
-| Schalter „OEM-Entsperrung“ | Noch am Gerät nachzusehen |
+| Schalter „OEM-Entsperrung“ | In den Entwickleroptionen vorhanden, noch ausgeschaltet |
 | Browser | Chrome und WebView 106 (Oktober 2022), Firefox Klar; alle ohne weitere Updates |
 | Apps | 128 Pakete, davon 13 nachinstalliert; Play Store und Google-Dienste vorhanden |
 
@@ -123,7 +123,7 @@ Es gilt: nur Firefox mit uBlock Origin, keine Google-Konten, keine gespeicherten
 
 Geprüft: Die 21 Einzelpartitionen stimmen Byte für Byte mit den entsprechenden Ausschnitten des Komplettabbilds überein. Beide wurden unabhängig voneinander gelesen. `nvram`, `proinfo`, `protect1` und `protect2` enthalten Daten; sie gibt es nur auf diesem Gerät (WLAN- und Bluetooth-Adresse, Seriennummer, Kalibrierung).
 
-Noch offen: eine Kopie der Sicherung auf einen zweiten Datenträger. Zurückgespielt wurde die Sicherung noch nie, das Schreiben ist also ungetestet.
+Nach dem Auslesen ist das Tablet wieder normal in Android gestartet. Noch offen: eine Kopie der Sicherung auf einen zweiten Datenträger. Zurückgespielt wurde die Sicherung noch nie, das Schreiben ist also ungetestet.
 
 ### Wie es funktioniert hat
 
@@ -166,7 +166,6 @@ Das SP Flash Tool wurde nicht gebraucht. Es bleibt die Rückfallebene für das Z
 
 ## Offene Punkte
 
-- Ob die Entwickleroptionen einen Schalter „OEM-Entsperrung“ haben, ist noch nachzusehen. Ohne ihn bleibt das Flashen über den USB-Notfallmodus.
 - Die tatsächliche Akkulaufzeit ist nicht gemessen.
 - Welchen Stand der Sicherheitspatches die LineageOS-Builds haben und ob die Verschlüsselung darin funktioniert, zeigt sich erst am installierten System.
 - Die Forenbeiträge bei XDA und HTCMania ließen sich nicht automatisch abrufen; die Angaben daraus stammen aus Suchergebnissen.

@@ -1,6 +1,6 @@
 # Übergabe für die nächste Session
 
-Stand 15.11.2026: Bestandsaufnahme, Recherche und Sicherung sind erledigt, die Ergebnisse stehen im [README](README.md). Am Tablet wurde noch nichts verändert. Die Fragen unter „Was noch niemand weiß“ sind bis auf den Schalter „OEM-Entsperrung“ beantwortet.
+Stand 15.11.2026: Bestandsaufnahme, Recherche und Sicherung sind erledigt, die Ergebnisse stehen im [README](README.md). Am Tablet wurde noch nichts verändert. Die Fragen unter „Was noch niemand weiß“ sind beantwortet; der Schalter „OEM-Entsperrung“ ist vorhanden.
 
 Nächster Schritt: Der Besitzer entscheidet, ob LineageOS 15.1 trotz SELinux „permissive“ installiert wird. Erst danach Bootloader entsperren und flashen.
 
