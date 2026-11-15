@@ -13,7 +13,7 @@ Dieses Projekt ist geplant, aber noch nicht begonnen. Am Tablet wurde bisher nic
 Diese Fragen zuerst klären, am Gerät und nicht aus dem Gedächtnis:
 
 1. Startet das Tablet überhaupt, und hält der Akku?
-2. Welche Variante ist es: HD (`cooler`, 1280 × 800) oder FHD (`frieza`, 1920 × 1200)? Auf der Rückseite steht nur „Aquaris M10“.
+2. Welche Variante ist es: HD (unter Android `freezerhd`, unter Ubuntu `cooler`, 1280 × 800) oder FHD (`freezerfhd` bzw. `frieza`, 1920 × 1200)? Auf der Rückseite steht nur „Aquaris M10“.
 3. Welches System läuft: Android (welche Version) oder die Ubuntu Edition?
 4. Lässt sich USB-Debugging einschalten, und erkennt `adb` das Gerät?
 5. Lässt sich der Bootloader entsperren (`fastboot oem unlock` oder Schalter „OEM-Entsperrung“)?
