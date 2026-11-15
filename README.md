@@ -2,7 +2,7 @@
 
 Ein altes BQ Aquaris M10 wird zu einem schlanken Surftablet für das Heimnetz. Der Schwerpunkt liegt auf Tempo und Sicherheit, mit möglichst wenigen Apps.
 
-**Stand:** Planung. Am Tablet wurde noch nichts verändert.
+**Stand:** Planung. Am Tablet wurde noch nichts verändert. Die nächsten Schritte und offenen Fragen stehen in der [Übergabe](CLAUDE.md).
 
 ## Zielgerät
 
