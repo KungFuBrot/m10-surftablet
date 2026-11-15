@@ -51,9 +51,10 @@ Am Gerät entscheiden `adb shell getprop ro.product.device` und `adb shell wm si
 
 | Weg | Aufwand | Sicherheit | Tempo |
 |---|---|---|---|
-| Ubuntu Touch 16.04 | Gering | Schlecht: der Browser ist jahrelang veraltet | Ordentlich |
+| Ubuntu Touch 16.04 | Gering | Schlecht: der Browser ist jahrelang veraltet. Neuere Ausgaben (20.04, 24.04) gibt es für das M10 FHD nicht, UBports führt es als nicht mehr unterstützt | Ordentlich |
 | **LineageOS (inoffiziell) mit aktuellem Browser** | Mittel | Am besten, weil der Browser aktuell bleibt | Am besten, die Grafikbeschleunigung funktioniert |
-| Eigene postmarketOS-Portierung | Sehr hoch, Ausgang offen | Aktuelle Programme, aber alter Kernel | Vermutlich langsam, Grafiktreiber fehlen |
+| postmarketOS | Hoch, Ausgang offen. Ein Gerätepaket `device-bq-frieza` existiert laut Suchergebnissen; Stand und Funktionsumfang ließen sich am 15.11.2026 nicht abrufen | Aktuelle Programme, aber alter Kernel | Vermutlich langsam, Grafiktreiber fehlen |
+| Neugerät | Kosten statt Aufwand | Am besten: aktuelles System, Kernel und Browser mit Updates | Am besten |
 
 Beim Surfen ist der Browser das größte Einfallstor. Deshalb fällt die Wahl auf ein Android mit Linux-Kernel und einen Browser, der noch Updates bekommt. Die Recherche unten schränkt diese Entscheidung ein: siehe [Empfehlung](#empfehlung).
 
@@ -175,6 +176,8 @@ Das SP Flash Tool wurde nicht gebraucht. Es bleibt die Rückfallebene für das Z
 
 Abgerufen am 15.11.2026.
 
+- Ubuntu Touch: [Geräteseite frieza](https://devices.ubuntu-touch.io/device/frieza/)
+- postmarketOS: [Wiki-Seite bq-frieza](https://wiki.postmarketos.org/wiki/BQ_Aquaris_M10_FHD_(bq-frieza)) (nicht abrufbar gewesen)
 - LineageOS-Builds: [bq-mtk/ota_releases](https://github.com/bq-mtk/ota_releases/releases)
 - Gerätebäume mit der SELinux-Einstellung: [mt8163-common](https://github.com/bq-mtk/android_device_bq_mt8163-common/blob/lineage-15.1/BoardConfigCommon.mk), [freezerhd](https://github.com/bq-mtk/android_device_bq_freezerhd/blob/lineage-15.1/BoardConfig.mk), [freezerfhd](https://github.com/bq-mtk/android_device_bq_freezerfhd)
 - Originalfirmware: [bq-mtk/firmware_collection](https://github.com/bq-mtk/firmware_collection)
