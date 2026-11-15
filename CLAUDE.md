@@ -6,8 +6,8 @@ Nächster Schritt: Der Besitzer entscheidet, ob LineageOS 15.1 trotz SELinux „
 
 Sicherung und Werkzeug liegen außerhalb des Repositorys:
 
-- `C:Educationm10-sicherung`: Komplettabbild, Einzelpartitionen, `SHA256SUMS.txt`
-- `C:Educationm10-werkzeug`: mtkclient mit den Anpassungen aus `werkzeug/mtkclient-m10.patch`, eigene Python-Umgebung `venv`
+- `C:\Education\m10-sicherung`: Komplettabbild, Einzelpartitionen, `SHA256SUMS.txt`
+- `C:\Education\m10-werkzeug`: mtkclient mit den Anpassungen aus `werkzeug/mtkclient-m10.patch`, eigene Python-Umgebung `venv`
 
 mtkclient immer mit `--serialport` aufrufen, ab dem zweiten Befehl einer Sitzung mit `M10_RESUME=2`. Einzelheiten und Stolpersteine stehen im README unter „Sicherung“.
 
