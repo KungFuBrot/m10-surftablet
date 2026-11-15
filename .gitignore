@@ -1,0 +1,12 @@
+# Speicherabbilder und Firmware gehören nicht ins Repository
+backup/
+dumps/
+*.img
+*.bin
+*.zip
+*.tar
+*.tar.gz
+
+# System
+Thumbs.db
+.DS_Store
