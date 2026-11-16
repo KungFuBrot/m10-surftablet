@@ -2,7 +2,7 @@
 
 Ein altes BQ Aquaris M10 wird zu einem schlanken Surftablet für das Heimnetz. Der Schwerpunkt liegt auf Tempo und Sicherheit, mit möglichst wenigen Apps.
 
-**Stand (16.11.2026):** LineageOS 15.1 ist als Versuch installiert, dazu F-Droid und Fennec (Firefox). WLAN, uBlock Origin und Lesezeichen sind eingerichtet; Passwortmanager, Bildschirmsperre und das Abschalten des Debuggings stehen noch aus. Vorher wurde der komplette Speicher gesichert.
+**Stand (16.11.2026):** LineageOS 15.1 ist als Versuch installiert, dazu F-Droid und Fennec (Firefox). WLAN, uBlock Origin, Lesezeichen und KeePassDX sind eingerichtet; Bildschirmsperre und das Abschalten des Debuggings stehen noch aus. Vorher wurde der komplette Speicher gesichert.
 
 ## Zielgerät
 
@@ -145,9 +145,11 @@ Stolpersteine: Der direkte Aufruf des Installationsprogramms aus dem Paket brach
 - uBlock Origin ist in Fennec installiert, auch für private Tabs.
 - Lesezeichen in Fennec: Netflix, YouTube, ARD Mediathek, ZDF. Ob die Videos abspielen, ist nicht geprüft; Netflix verlangt Kopierschutz (Widevine) und unterstützt mobile Browser nur eingeschränkt.
 
+- Passwortmanager: KeePassDX 4.5.8 (`com.kunzisoft.keepass.libre`) von f-droid.org, per `adb install`. Die App startet; sie sperrt Bildschirmfotos, deshalb ist die Einrichtung nicht fernsteuerbar. Gewählt, weil die Passwortdatei mit einem eigenen Hauptpasswort verschlüsselt ist und der Speicher des Tablets selbst unverschlüsselt bleibt.
+
 ### Noch am Gerät zu erledigen
 
-1. Passwortmanager auswählen und einrichten.
+1. In KeePassDX eine Datenbank mit Hauptpasswort anlegen.
 2. Bildschirmsperre setzen (Stand 16.11.2026: keine gesetzt).
 3. In F-Droid die Paketquellen aktualisieren. Updates für Fennec und F-Droid kommen von dort und müssen auf Android 8 jeweils angetippt werden.
 4. Android-Debugging in den Entwickleroptionen abschalten (Stand 16.11.2026: noch eingeschaltet).

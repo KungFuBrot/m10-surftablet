@@ -1,8 +1,8 @@
 # Übergabe für die nächste Session
 
-Stand 16.11.2026: LineageOS 15.1 ist als Versuch installiert (Bootloader entsperrt, alte Daten gelöscht), dazu F-Droid, Fennec mit uBlock Origin und vier Lesezeichen. Einzelheiten stehen im [README](README.md) unter „Installation“. Die Fragen unter „Was noch niemand weiß“ sind beantwortet.
+Stand 16.11.2026: LineageOS 15.1 ist als Versuch installiert (Bootloader entsperrt, alte Daten gelöscht), dazu F-Droid, Fennec mit uBlock Origin und vier Lesezeichen sowie KeePassDX. Einzelheiten stehen im [README](README.md) unter „Installation“. Die Fragen unter „Was noch niemand weiß“ sind beantwortet.
 
-Nächste Schritte: Passwortmanager nach Wahl des Besitzers einrichten, Bildschirmsperre setzen, Android-Debugging abschalten. Solange das Debugging an ist, funktioniert `adb` ohne Bestätigung am Gerät (`ro.adb.secure=0`); Fennec lässt sich so per `input tap` und `screencap` fernsteuern. Taugt LineageOS dem Besitzer nicht, kauft er ein Neugerät.
+Nächste Schritte: Der Besitzer legt in KeePassDX seine Datenbank an; dann Bildschirmsperre setzen, Android-Debugging abschalten. Solange das Debugging an ist, funktioniert `adb` ohne Bestätigung am Gerät (`ro.adb.secure=0`); Fennec lässt sich so per `input tap` und `screencap` fernsteuern. Taugt LineageOS dem Besitzer nicht, kauft er ein Neugerät.
 
 Sicherung und Werkzeug liegen außerhalb des Repositorys:
 
