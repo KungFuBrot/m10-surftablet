@@ -1,8 +1,8 @@
 # Übergabe für die nächste Session
 
-Stand 15.11.2026: Bestandsaufnahme, Recherche und Sicherung sind erledigt, die Ergebnisse stehen im [README](README.md). Am Tablet wurde noch nichts verändert. Die Fragen unter „Was noch niemand weiß“ sind beantwortet; der Schalter „OEM-Entsperrung“ ist vorhanden.
+Stand 16.11.2026: LineageOS 15.1 ist als Versuch installiert (Bootloader entsperrt, alte Daten gelöscht), dazu F-Droid, Fennec mit uBlock Origin und vier Lesezeichen. Einzelheiten stehen im [README](README.md) unter „Installation“. Die Fragen unter „Was noch niemand weiß“ sind beantwortet.
 
-Nächster Schritt: Der Besitzer entscheidet, ob LineageOS 15.1 trotz SELinux „permissive“ installiert wird. Erst danach Bootloader entsperren und flashen.
+Nächste Schritte: Passwortmanager nach Wahl des Besitzers einrichten, Bildschirmsperre setzen, Android-Debugging abschalten. Solange das Debugging an ist, funktioniert `adb` ohne Bestätigung am Gerät (`ro.adb.secure=0`); Fennec lässt sich so per `input tap` und `screencap` fernsteuern. Taugt LineageOS dem Besitzer nicht, kauft er ein Neugerät.
 
 Sicherung und Werkzeug liegen außerhalb des Repositorys:
 

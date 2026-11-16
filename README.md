@@ -2,7 +2,7 @@
 
 Ein altes BQ Aquaris M10 wird zu einem schlanken Surftablet für das Heimnetz. Der Schwerpunkt liegt auf Tempo und Sicherheit, mit möglichst wenigen Apps.
 
-**Stand (16.11.2026):** LineageOS 15.1 ist als Versuch installiert, dazu F-Droid und Fennec (Firefox). Die Einrichtung am Gerät (WLAN, uBlock Origin, Bildschirmsperre, Debugging abschalten) steht noch aus. Vorher wurde der komplette Speicher gesichert.
+**Stand (16.11.2026):** LineageOS 15.1 ist als Versuch installiert, dazu F-Droid und Fennec (Firefox). WLAN, uBlock Origin und Lesezeichen sind eingerichtet; Passwortmanager, Bildschirmsperre und das Abschalten des Debuggings stehen noch aus. Vorher wurde der komplette Speicher gesichert.
 
 ## Zielgerät
 
@@ -139,13 +139,18 @@ Stolpersteine: Der direkte Aufruf des Installationsprogramms aus dem Paket brach
 | Verschlüsselung | Aus. Ob sie funktioniert, ist ungetestet |
 | Speicher | 12 GB frei |
 
+### Einrichtung (16.11.2026)
+
+- Der Besitzer hat den Einrichtungsassistenten durchlaufen und das WLAN verbunden; nach seiner Aussage ist das Tablet einsatzbereit.
+- uBlock Origin ist in Fennec installiert, auch für private Tabs.
+- Lesezeichen in Fennec: Netflix, YouTube, ARD Mediathek, ZDF. Ob die Videos abspielen, ist nicht geprüft; Netflix verlangt Kopierschutz (Widevine) und unterstützt mobile Browser nur eingeschränkt.
+
 ### Noch am Gerät zu erledigen
 
-1. Einrichtungsassistent durchlaufen, WLAN verbinden.
-2. In Fennec uBlock Origin installieren.
-3. Bildschirmsperre setzen.
-4. In F-Droid die Paketquellen aktualisieren. Updates für Fennec und F-Droid kommen von dort und müssen auf Android 8 jeweils angetippt werden.
-5. Android-Debugging in den Entwickleroptionen abschalten.
+1. Passwortmanager auswählen und einrichten.
+2. Bildschirmsperre setzen (Stand 16.11.2026: keine gesetzt).
+3. In F-Droid die Paketquellen aktualisieren. Updates für Fennec und F-Droid kommen von dort und müssen auf Android 8 jeweils angetippt werden.
+4. Android-Debugging in den Entwickleroptionen abschalten (Stand 16.11.2026: noch eingeschaltet).
 
 ## Sicherung
 
@@ -198,7 +203,7 @@ Das SP Flash Tool wurde nicht gebraucht. Es bleibt die Rückfallebene für das Z
 1. **Bestandsaufnahme:** erledigt, siehe oben.
 2. **Sichern:** erledigt, siehe oben.
 3. **Entscheiden:** erledigt. LineageOS 15.1 als Versuch; wenn es nicht taugt, Neugerät.
-4. **Installieren und abspecken:** erledigt bis auf uBlock Origin, siehe Installation.
+4. **Installieren und abspecken:** erledigt, siehe Installation.
 5. **Absichern:** Bildschirmsperre, Verschlüsselung (falls sie funktioniert), keine Google-Dienste, automatische Browser-Updates.
 
 ## Offene Punkte
