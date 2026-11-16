@@ -2,7 +2,7 @@
 
 Ein altes BQ Aquaris M10 wird zu einem schlanken Surftablet für das Heimnetz. Der Schwerpunkt liegt auf Tempo und Sicherheit, mit möglichst wenigen Apps.
 
-**Stand (15.11.2026):** Bestandsaufnahme und Recherche sind abgeschlossen. Es ist ein M10 FHD mit Android 6.0. Der komplette Speicher ist gesichert und geprüft. Am Tablet wurde noch nichts verändert. Als Nächstes entscheidet der Besitzer über LineageOS 15.1. Die nächsten Schritte und offenen Fragen stehen in der [Übergabe](CLAUDE.md).
+**Stand (16.11.2026):** LineageOS 15.1 ist als Versuch installiert, dazu F-Droid und Fennec (Firefox). Die Einrichtung am Gerät (WLAN, uBlock Origin, Bildschirmsperre, Debugging abschalten) steht noch aus. Vorher wurde der komplette Speicher gesichert.
 
 ## Zielgerät
 
@@ -111,6 +111,42 @@ Für ein M10 HD wäre die Empfehlung anders ausgefallen: Dort gibt es Originalfi
 
 Es gilt: nur Firefox mit uBlock Origin, keine Google-Konten, keine gespeicherten Passwörter für wichtige Dienste.
 
+## Installation
+
+**Erledigt am 15./16.11.2026**, als Versuch nach Zustimmung des Besitzers. Dateien und Werkzeuge liegen außerhalb des Repositorys.
+
+| Schritt | Ergebnis |
+|---|---|
+| Fastboot-Treiber | „Android ADB Interface“ 9.0 von Google aus dem Microsoft Update Catalog (von Microsoft signiert). Ohne ihn erkennt Windows den Fastboot-Modus des Tablets (USB-Kennung 0BB4:0C01) nicht |
+| Entsperren | „OEM-Entsperrung“ einschalten, `adb reboot bootloader`, `fastboot oem unlock`, am Tablet mit „Lauter“ bestätigen. Löscht alle Daten |
+| TWRP | 3.4.0 für `freezerfhd` von twrp.me, Prüfsumme stimmt. Nur mit `fastboot boot` gestartet, nicht installiert; das Original-Recovery ist geblieben |
+| Datenbereich | Nach dem Entsperren leer und nicht einhängbar. In TWRP von Hand mit `make_ext4fs` formatiert, 16 384 Bytes am Ende frei gelassen |
+| LineageOS | `twrp install` mit dem Paket vom 06.09.2021, fehlerfrei in zwei Minuten. Das Paket schreibt nur `system` und `boot` |
+| Apps | F-Droid 2.0.3 und Fennec 160.0.0 von f-droid.org per `adb install`. Fennec ist der Firefox-Ableger aus F-Droid und verlangt Android 8.0 |
+| Abspecken | 14 mitgelieferte Apps mit `pm disable-user` deaktiviert, darunter der Browser Jelly, E-Mail, Kalender, Kontakte, Musik und der Updater |
+
+Stolpersteine: Der direkte Aufruf des Installationsprogramms aus dem Paket brach mit „E1001“ ab, bevor etwas geschrieben wurde; über `twrp install` lief es. Der Befehl `twrp wipe cache` blieb hängen.
+
+### Was am installierten System auffällt
+
+| | |
+|---|---|
+| Version | LineageOS 15.1, Android 8.1.0, Bauart `userdebug` |
+| Sicherheitspatch | 05.08.2021, Herstelleranteile August 2018 |
+| SELinux | Permissive, wie aus dem Quellcode erwartet |
+| **USB-Debugging** | **Ab Werk eingeschaltet und ohne Bestätigung am Gerät nutzbar** (`ro.adb.secure=0`). Wer das Tablet per USB anschließt, hat vollen Zugriff. Nach der Einrichtung in den Entwickleroptionen abschalten |
+| WebView | Version 92 von 2021. Alles Surfen läuft deshalb über Fennec, der eingebaute Browser ist deaktiviert |
+| Verschlüsselung | Aus. Ob sie funktioniert, ist ungetestet |
+| Speicher | 12 GB frei |
+
+### Noch am Gerät zu erledigen
+
+1. Einrichtungsassistent durchlaufen, WLAN verbinden.
+2. In Fennec uBlock Origin installieren.
+3. Bildschirmsperre setzen.
+4. In F-Droid die Paketquellen aktualisieren. Updates für Fennec und F-Droid kommen von dort und müssen auf Android 8 jeweils angetippt werden.
+5. Android-Debugging in den Entwickleroptionen abschalten.
+
 ## Sicherung
 
 **Erledigt am 15.11.2026.** Der komplette Speicher liegt auf dem PC, außerhalb des Repositorys. Auslesen verändert das Tablet nicht.
@@ -161,8 +197,8 @@ Das SP Flash Tool wurde nicht gebraucht. Es bleibt die Rückfallebene für das Z
 
 1. **Bestandsaufnahme:** erledigt, siehe oben.
 2. **Sichern:** erledigt, siehe oben.
-3. **Entscheiden:** LineageOS 15.1 mit seinen Schwächen annehmen oder das Vorhaben überdenken, siehe Empfehlung.
-4. **Installieren und abspecken:** Nur Firefox und Werbeblocker, alles andere entfernen oder deaktivieren.
+3. **Entscheiden:** erledigt. LineageOS 15.1 als Versuch; wenn es nicht taugt, Neugerät.
+4. **Installieren und abspecken:** erledigt bis auf uBlock Origin, siehe Installation.
 5. **Absichern:** Bildschirmsperre, Verschlüsselung (falls sie funktioniert), keine Google-Dienste, automatische Browser-Updates.
 
 ## Offene Punkte
