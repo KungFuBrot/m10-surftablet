@@ -1,0 +1,2 @@
+# M10-Surftablet: 768 MB zram
+/dev/block/zram0 none swap defaults zramsize=805306368

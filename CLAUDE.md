@@ -1,8 +1,8 @@
 # Übergabe für die nächste Session
 
-Stand 16.11.2026: LineageOS 15.1 ist als Versuch installiert (Bootloader entsperrt, alte Daten gelöscht), dazu F-Droid, Fennec mit uBlock Origin und vier Lesezeichen sowie KeePassDX. Einzelheiten stehen im [README](README.md) unter „Installation“. Die Fragen unter „Was noch niemand weiß“ sind beantwortet.
+Stand 17.11.2026: LineageOS 15.1 ist als Versuch installiert (Bootloader entsperrt, alte Daten gelöscht), dazu F-Droid, Fennec mit uBlock Origin und vier Lesezeichen sowie KeePassDX. Am 17.11. wurden der Video-Chip (fehlende Herstellerbibliothek, Rechte auf `/dev/Vcodec`) und zram repariert; drei eigene Dateien liegen dafür in `/system`, siehe README unter „Tempo“. Einzelheiten stehen im [README](README.md) unter „Installation“. Die Fragen unter „Was noch niemand weiß“ sind beantwortet.
 
-Nächste Schritte: Der Besitzer legt in KeePassDX seine Datenbank an; dann Bildschirmsperre setzen, Android-Debugging abschalten. Solange das Debugging an ist, funktioniert `adb` ohne Bestätigung am Gerät (`ro.adb.secure=0`); Fennec lässt sich so per `input tap` und `screencap` fernsteuern. Taugt LineageOS dem Besitzer nicht, kauft er ein Neugerät.
+Nächste Schritte: Der Besitzer legt in KeePassDX seine Datenbank an; dann Bildschirmsperre setzen, Root-Zugriff und Android-Debugging abschalten. Nach jedem Neustart läuft `adb` wieder ohne Root; `adb root` geht nur, solange in den Entwickleroptionen „Root-Zugriff: Nur ADB“ eingestellt ist. Solange das Debugging an ist, funktioniert `adb` ohne Bestätigung am Gerät (`ro.adb.secure=0`); Fennec lässt sich so per `input tap` und `screencap` fernsteuern. Taugt LineageOS dem Besitzer nicht, kauft er ein Neugerät.
 
 Sicherung und Werkzeug liegen außerhalb des Repositorys:
 

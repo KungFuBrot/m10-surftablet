@@ -1,0 +1,6 @@
+# M10-Surftablet (github.com/KungFuBrot/m10-surftablet)
+# 1. Video-Chip: der Decoderdienst (Gruppe camera) braucht Zugriff auf /dev/Vcodec
+# 2. RAM-Komprimierung (zram) einschalten
+on property:sys.boot_completed=1
+    chown media camera /dev/Vcodec
+    swapon_all /system/etc/fstab.zram

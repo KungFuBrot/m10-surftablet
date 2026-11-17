@@ -2,7 +2,7 @@
 
 Ein altes BQ Aquaris M10 wird zu einem schlanken Surftablet für das Heimnetz. Der Schwerpunkt liegt auf Tempo und Sicherheit, mit möglichst wenigen Apps.
 
-**Stand (16.11.2026):** LineageOS 15.1 ist als Versuch installiert, dazu F-Droid und Fennec (Firefox). WLAN, uBlock Origin, Lesezeichen und KeePassDX sind eingerichtet; Bildschirmsperre und das Abschalten des Debuggings stehen noch aus. Vorher wurde der komplette Speicher gesichert.
+**Stand (17.11.2026):** LineageOS 15.1 ist als Versuch installiert, dazu F-Droid und Fennec (Firefox). WLAN, uBlock Origin, Lesezeichen und KeePassDX sind eingerichtet. Der Video-Chip und die RAM-Komprimierung sind repariert (siehe „Tempo“). Bildschirmsperre und das Abschalten des Debuggings stehen noch aus. Vorher wurde der komplette Speicher gesichert.
 
 ## Zielgerät
 
@@ -147,12 +147,30 @@ Stolpersteine: Der direkte Aufruf des Installationsprogramms aus dem Paket brach
 
 - Passwortmanager: KeePassDX 4.5.8 (`com.kunzisoft.keepass.libre`) von f-droid.org, per `adb install`. Die App startet; sie sperrt Bildschirmfotos, deshalb ist die Einrichtung nicht fernsteuerbar. Gewählt, weil die Passwortdatei mit einem eigenen Hauptpasswort verschlüsselt ist und der Speicher des Tablets selbst unverschlüsselt bleibt.
 
+### Tempo (17.11.2026)
+
+Der Besitzer fand Surfen und Videos sehr langsam. Ursachen und Reparatur:
+
+| Befund | Ursache | Reparatur |
+|---|---|---|
+| Videos laufen nur über den Prozessor; Fennec meldet `H264_HW_DECODE: Hardware codec not available` | Dem LineageOS-Build fehlt die Herstellerbibliothek `libhevce_sb.ca7.android.so`. Der Videotreiber `libvcodecdrv.so` braucht sie, ohne sie lädt keiner der MTK-Decoder (`OMX.MTK.VIDEO.DECODER.*`, Fehler 0x80001003) | Die Datei aus dem Original-System der eigenen Sicherung (BQ 2.6.2, Android 6.0) nach `/system/lib` kopiert. SHA-256 `ef0b4e7474796c910f05136d59a2ab50ead953f317335761e27227acda6412be` |
+| Danach bricht die Wiedergabe ab: `/dev/Vcodec open failed` | Der Decoderdienst läuft unter Android 8 als Nutzer `mediacodec` (Gruppe `camera`), das Herstellerskript gibt `/dev/Vcodec` aber nur `media` und `system` | [`werkzeug/m10-surftablet.rc`](werkzeug/m10-surftablet.rc) in `/system/etc/init` setzt nach dem Start die Gruppe `camera`. Bewusst nicht `0666`, damit Apps den Treiber nicht direkt ansprechen können |
+| 2 GB RAM, ein Fennec-Tab braucht rund 570 MB, kein Auslagerungsspeicher | zram ist im Kernel vorhanden, aber nicht eingeschaltet | Dieselbe Startdatei schaltet 768 MB zram ein, Einstellungen in [`werkzeug/fstab.zram`](werkzeug/fstab.zram) (nach `/system/etc`) |
+
+Geprüft nach einem Neustart ohne weiteren Eingriff: YouTube (H.264, 60 Bilder/s) läuft über `OMX.MTK.VIDEO.DECODER.AVC`, ohne Fehler; die Prozessorlast liegt bei rund 50 %. VP8 und VP9 dekodiert weiterhin der Prozessor. In Ordnung waren schon vorher: Fennec zeichnet über die Grafikeinheit (WebRender), die Temperatur bleibt unauffällig.
+
+So wurde es gemacht: Root-Zugriff „Nur ADB“ in den Entwickleroptionen, `adb root`, `mount -o rw,remount /system`, Dateien kopieren (Eigentümer `root`, Rechte 644, SELinux-Kennung `system_file`), wieder schreibgeschützt einhängen. Die Bibliothek wurde mit [`werkzeug/ext4read.py`](werkzeug/ext4read.py) aus der Sicherung gelesen; das Skript liest nur und braucht keine Zusatzpakete. Die Bibliothek selbst ist Herstellerfirmware und liegt nicht im Repository.
+
+Rückgängig: die drei Dateien wieder löschen. Ein LineageOS-Update würde `/system` überschreiben und die Reparatur entfernen; für diesen Build ist aber keins zu erwarten.
+
+Weiter möglich: In Fennec ist „Desktop-Website“ eingeschaltet. Die Desktop-Seiten sind schwerer, und YouTube wählt dort höhere Auflösungen.
+
 ### Noch am Gerät zu erledigen
 
 1. In KeePassDX eine Datenbank mit Hauptpasswort anlegen.
 2. Bildschirmsperre setzen (Stand 16.11.2026: keine gesetzt).
 3. In F-Droid die Paketquellen aktualisieren. Updates für Fennec und F-Droid kommen von dort und müssen auf Android 8 jeweils angetippt werden.
-4. Android-Debugging in den Entwickleroptionen abschalten (Stand 16.11.2026: noch eingeschaltet).
+4. In den Entwickleroptionen den Root-Zugriff wieder auf „Deaktiviert“ stellen und das Android-Debugging abschalten (Stand 17.11.2026: beides eingeschaltet).
 
 ## Sicherung
 
