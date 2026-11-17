@@ -2,7 +2,7 @@
 
 Ein altes BQ Aquaris M10 wird zu einem schlanken Surftablet für das Heimnetz. Der Schwerpunkt liegt auf Tempo und Sicherheit, mit möglichst wenigen Apps.
 
-**Stand (17.11.2026):** LineageOS 15.1 ist als Versuch installiert, dazu F-Droid und Fennec (Firefox). WLAN, uBlock Origin, Lesezeichen und KeePassDX sind eingerichtet. Der Video-Chip und die RAM-Komprimierung sind repariert (siehe „Tempo“). Bildschirmsperre und das Abschalten des Debuggings stehen noch aus. Vorher wurde der komplette Speicher gesichert.
+**Stand (17.11.2026):** LineageOS 15.1 ist als Versuch installiert, dazu F-Droid und Fennec (Firefox). WLAN, uBlock Origin, Lesezeichen und KeePassDX sind eingerichtet. Der Video-Chip und die RAM-Komprimierung sind repariert (siehe „Tempo“), Werbung wird im Browser und systemweit gesperrt (siehe „Werbung“). Bildschirmsperre und das Abschalten des Debuggings stehen noch aus. Vorher wurde der komplette Speicher gesichert.
 
 ## Zielgerät
 
@@ -164,6 +164,32 @@ So wurde es gemacht: Root-Zugriff „Nur ADB“ in den Entwickleroptionen, `adb 
 Rückgängig: die drei Dateien wieder löschen. Ein LineageOS-Update würde `/system` überschreiben und die Reparatur entfernen; für diesen Build ist aber keins zu erwarten.
 
 Weiter möglich: In Fennec ist „Desktop-Website“ eingeschaltet. Die Desktop-Seiten sind schwerer, und YouTube wählt dort höhere Auflösungen.
+
+### Werbung (17.11.2026)
+
+Der Besitzer wollte sämtliche Werbung sperren. Bei der Prüfung fehlte uBlock Origin: Es war am 16.11. um 21:56 über die Fennec-Oberfläche entfernt worden (Erweiterungsdaten und Einstellungen sauber gelöscht). Jetzt gilt:
+
+| Ebene | Was | Stand |
+|---|---|---|
+| Browser | uBlock Origin von addons.mozilla.org, auch für private Tabs | neu installiert, Testseite adblock-tester.com: 100 von 100 Punkten |
+| System | Sperrliste [StevenBlack/hosts](https://github.com/StevenBlack/hosts) (Werbung und Schadsoftware, 76 104 Adressen, Stand 15.11.2026) als `/system/etc/hosts` | wirkt für alle Apps, auch wenn uBlock fehlt; gesperrte Adressen zeigen auf `0.0.0.0` |
+
+Werbung kommt auf diesem Tablet praktisch nur aus dem Browser: F-Droid, KeePassDX und die LineageOS-Apps zeigen keine. Nicht sperrbar ist Werbung, die fest im Videostrom steckt (Netflix-Abo mit Werbung); bei YouTube hängt es davon ab, wie schnell uBlock auf Änderungen reagiert.
+
+Geprüft: ZDF, ARD Mediathek, Netflix und YouTube laden normal. Die Sperrliste enthält dort nur Werbe- und Zähladressen (zum Beispiel `ads.youtube.com`, `logs.netflix.com`). Die Namensauflösung bleibt schnell; nur Rückwärtsabfragen (IP-Adresse zu Name, etwa durch `ping`) dauern mit der langen Liste knapp eine Sekunde, Browser brauchen sie nicht.
+
+Die Liste aktualisiert sich nicht selbst. Aktualisieren (Root-Zugriff „Nur ADB“ nötig):
+
+```bash
+curl -sSfL -o hosts https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+adb root
+adb push hosts /data/local/tmp/hosts
+adb shell "mount -o rw,remount /system && cp /data/local/tmp/hosts /system/etc/hosts && chmod 644 /system/etc/hosts && chcon u:object_r:system_file:s0 /system/etc/hosts && mount -o ro,remount /system && rm /data/local/tmp/hosts"
+```
+
+Rückgängig: Die ursprüngliche Datei hatte nur zwei Zeilen, `127.0.0.1 localhost` und `::1 ip6-localhost`.
+
+Falls eine Seite nicht mehr funktioniert: erst uBlock für diese Seite abschalten (Fennec-Menü → Erweiterungen → uBlock Origin → großer Schalter). Hilft das nicht, blockiert die Hosts-Liste eine Adresse; dann die Zeile aus der Liste entfernen und neu aufspielen.
 
 ### Noch am Gerät zu erledigen
 
