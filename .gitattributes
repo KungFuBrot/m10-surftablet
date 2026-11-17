@@ -1,0 +1,3 @@
+# Dateien für das Tablet brauchen Unix-Zeilenenden
+*.rc text eol=lf
+fstab.* text eol=lf
